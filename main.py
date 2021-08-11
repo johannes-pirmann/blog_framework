@@ -7,7 +7,7 @@ app = Flask(__name__, template_folder='templates')
 
 def markdown_to_html(filename):
     open_file = open(filename, 'r')
-    return markdown.markdown(open_file.read(), output='html5', encoding='utf-8')
+    return markdown.markdown(open_file.read())
 
 
 @app.route('/')
