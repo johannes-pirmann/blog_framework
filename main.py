@@ -1,42 +1,53 @@
-from flask import Flask, jsonify, render_template
+
+from flask import Flask, jsonify, render_template, abort
 import markdown
 from glob import glob
+import frontmatter
+from datetime import date
+
+from jinja2 import TemplateNotFound
+
+from articles.articles import article_page
 
 app = Flask(__name__, template_folder='templates')
+app.register_blueprint(article_page)
 
 
-def markdown_to_html(filename):
+def markdown_to_html(filename: str):
+    """
+    Converts a markdown file to html.
+    :param filename:
+        a markdown file
+    :return:
+        content of the markdown file as html
+    """
     open_file = open(filename, 'r')
     return markdown.markdown(open_file.read())
 
 
+@staticmethod
+def increase_view_count(route: str) -> None:
+    """
+    Takes current route and add one view to database.
+    :param route:
+        Takes the current route
+    :return:
+    """
+    pass
+
+
 @app.route('/')
 def index():
-    return markdown_to_html('blog/test.md')
+    try:
+        return 'Index'
+    except (FileNotFoundError, TemplateNotFound):
+        abort(404)
 
 
-@app.route('/blog')
-def return_all_articles():
-    filenames = glob('blog/*.md')
-    articles = {}
-    for file in filenames:
-        link = file[:file.find('.')]
-        title = link[link.find('/')+1:]
-        articles[file] = {'title': title, 'link': link}
-    return render_template('archive.html', articles=articles)
-
-
-@app.route('/blog/<article_name>')
-def render_article(article_name):
-    article_name = 'blog/' + article_name + '.md'
-    return markdown_to_html(article_name)
+@app.errorhandler(404)
+def page_not_found(e):
+    return '404', 404
 
 
 if __name__ == '__main__':
-    """
-    debug: Enables debug mode
-    use_debugger: 
-    use_reloader:
-    :passthrough_errors: True to show crashes in PyCharm
-    """
     app.run(debug=True, use_debugger=False, use_reloader=True, passthrough_errors=True)
