@@ -8,7 +8,7 @@
     - date
 
 ## TODO:
--[ ] Implement additional Front Matter options:
+- [ ] Implement additional Front Matter options:
   - [ ] description
   - [ ] draft 
   - [ ] expiry date
