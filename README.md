@@ -10,7 +10,6 @@
 ## TODO:
 -[ ] Implement additional Front Matter options:
     - [ ] description
- 
     - [ ] draft
  
     - [ ] expiry date
