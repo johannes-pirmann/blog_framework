@@ -8,20 +8,14 @@
 </head>
 <body>
 {% if articles%}
-        {% block content %}
         <ul>
             {% for article in articles%}
-            <li><a href="{{ articles[article]['link']}}">{{ articles[article]['title'] }}</a></li>
+            <li><a href="{{ articles[article]['link'] }}">{{ articles[article]['title'] }}</a></li>
             {% endfor%}
         </ul>
-    {% endblock %}
+{% else %}
+    <p>No articles found!</p>
 {% endif%}
-{% if names%}
-        <ul>
-            {% for name in names%}
-            <li>{{ name }}</li>
-            {% endfor%}
-        </ul>
-{% endif%}
+
 </body>
 </html>
