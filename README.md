@@ -9,7 +9,6 @@
 
 ## TODO:
 -[ ] Implement additional Front Matter options:
- 
     - [ ] description
  
     - [ ] draft
@@ -29,7 +28,6 @@
 -[ ] Create an author route
 
 -[ ] Implement simple analytics. 
-
     - If certain route is requested add it to the database.
 
 -[ ] Config file
