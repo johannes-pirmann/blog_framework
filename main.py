@@ -1,12 +1,8 @@
 
-from flask import Flask, jsonify, render_template, abort
+from flask import Flask, render_template, abort
 import markdown
-from glob import glob
 import frontmatter
-from datetime import date
-
 from jinja2 import TemplateNotFound
-
 from articles.articles import article_page
 
 app = Flask(__name__, template_folder='templates')
