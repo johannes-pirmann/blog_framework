@@ -23,4 +23,3 @@
 - [ ] Config file
   - Set logo
 - [ ] Build a 404 page
-- [ ]
