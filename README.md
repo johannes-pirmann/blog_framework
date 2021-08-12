@@ -33,7 +33,6 @@
     - If certain route is requested add it to the database.
 
 -[ ] Config file
-
   - Set logo
 
 -[ ] Build a 404 page
