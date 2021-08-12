@@ -44,6 +44,15 @@ def index():
         abort(404)
 
 
+@app.route('/page/<page_name>')
+def show_page(page_name):
+    try:
+        page = frontmatter.load('page/' + page_name + '.md')
+        return render_template('single_page.html', page=markdown.markdown(page.content))
+    except (FileNotFoundError, TemplateNotFound):
+        abort(404)
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return '404', 404
