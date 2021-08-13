@@ -30,3 +30,4 @@
     - Post
     - Page
     - Author
+- Change all render_template to return
