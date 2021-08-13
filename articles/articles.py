@@ -19,11 +19,24 @@ def return_all_posted_articles():
         current_date = date.today().strftime('%Y-%m-%d')
         articles = {}
         for file in filenames:
+            file_options = {
+                'link': '',
+                'title': '',
+                'date': '',
+                'description': '',
+                'draft': 'False',
+                'expiry_date': '',
+                'keywords': '',
+                'lastmod': '',
+                'summary': '',
+                'slug': ''
+            }
             article = frontmatter.load(file)
-            if article['date'] <= current_date:
-                link = article['link']
-                title = article['title']
-                articles[file] = {'title': title, 'link': link}
+            for key in article.keys():
+                file_options[key] = article[key]
+            print(file_options)
+            if file_options['date'] <= current_date and file_options['draft'] is not True:
+                articles[file] = file_options
             else:
                 pass
         return render_template('archive.html', articles=articles)
