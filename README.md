@@ -17,9 +17,16 @@
   
 
 ## TODO:
-- [ ] Create an author route
-- [ ] Implement simple analytics. 
+- Create an author route
+- Implement simple analytics. 
   - If certain route is requested add it to the database.
-- [ ] Config file
+- Config file
   - Set logo
-- [ ] Build a 404 page
+- Build a 404 page
+- Create a frontend:
+  - Setup React
+  - Build views:
+    - Archive
+    - Post
+    - Page
+    - Author
