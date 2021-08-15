@@ -12,7 +12,6 @@ def fetch_all_articles():
     return glob('blog/*.md')
 
 
-@article_page.route('/blog')
 def return_all_posted_articles():
     try:
         filenames = fetch_all_articles()
@@ -23,6 +22,7 @@ def return_all_posted_articles():
                 'link': '',
                 'title': '',
                 'date': '',
+                'author': 'Johannes-Pirmann',
                 'description': '',
                 'draft': 'False',
                 'expiry_date': '',
@@ -34,14 +34,18 @@ def return_all_posted_articles():
             article = frontmatter.load(file)
             for key in article.keys():
                 file_options[key] = article[key]
-            print(file_options)
             if file_options['date'] <= current_date and file_options['draft'] is not True:
                 articles[file] = file_options
             else:
                 pass
-        return render_template('archive.html', articles=articles)
     except (FileNotFoundError, TemplateNotFound):
         abort(404)
+    return articles
+
+
+@article_page.route('/blog')
+def archive():
+    return render_template('archive.html', articles=return_all_posted_articles())
 
 
 @article_page.route('/blog/<article_name>')
@@ -55,4 +59,9 @@ def show_article(article_name):
 
 @article_page.route('/author/<author_name>')
 def show_author(author_name):
-    pass
+    all_articles = return_all_posted_articles()
+    authors_posts = {}
+    for article in all_articles:
+        if all_articles[article]['author'] == author_name:
+            authors_posts[article] = all_articles[article]
+    return authors_posts
