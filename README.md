@@ -1,7 +1,9 @@
 # Blog Backend
 
 ## Features
-- List all articles
+- List all posted articles
+- List all posted articles by author
+- List individual articles
 - Front Matter options:
   - title
   - link
