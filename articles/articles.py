@@ -45,7 +45,7 @@ def return_all_posted_articles():
 
 @article_page.route('/blog')
 def archive():
-    return render_template('archive.html', articles=return_all_posted_articles())
+    return return_all_posted_articles()
 
 
 @article_page.route('/blog/<article_name>')

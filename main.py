@@ -44,7 +44,7 @@ def index():
 def show_page(page_name):
     try:
         page = frontmatter.load('page/' + page_name + '.md')
-        return render_template('single_page.html', page=markdown.markdown(page.content))
+        return markdown.markdown(page.content)
     except (FileNotFoundError, TemplateNotFound):
         abort(404)
 
