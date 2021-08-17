@@ -1,9 +1,9 @@
-
-from flask import Flask, render_template, abort
+from flask import Flask, abort, request
 import markdown
 import frontmatter
 from jinja2 import TemplateNotFound
 from articles.articles import article_page
+from handlers import analytics
 
 app = Flask(__name__, template_folder='templates')
 app.register_blueprint(article_page)
@@ -21,20 +21,11 @@ def markdown_to_html(filename: str):
     return markdown.markdown(open_file.read())
 
 
-@staticmethod
-def increase_view_count(route: str) -> None:
-    """
-    Takes current route and add one view to database.
-    :param route:
-        Takes the current route
-    :return:
-    """
-    pass
-
-
 @app.route('/')
 def index():
     try:
+        print(request.path)
+        analytics.increase_view_count(request.path)
         return 'Index'
     except (FileNotFoundError, TemplateNotFound):
         abort(404)
@@ -44,6 +35,7 @@ def index():
 def show_page(page_name):
     try:
         page = frontmatter.load('page/' + page_name + '.md')
+        analytics.increase_view_count(request.path)
         return markdown.markdown(page.content)
     except (FileNotFoundError, TemplateNotFound):
         abort(404)
@@ -51,6 +43,7 @@ def show_page(page_name):
 
 @app.errorhandler(404)
 def page_not_found(e):
+    analytics.increase_view_count(request.path)
     return '404', 404
 
 

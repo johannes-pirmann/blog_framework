@@ -2,8 +2,10 @@ from datetime import date
 from glob import glob
 import frontmatter
 import markdown
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, abort, request
 from jinja2 import TemplateNotFound
+from handlers import analytics
+
 
 article_page = Blueprint('article_page', __name__, template_folder='templates')
 
@@ -45,6 +47,7 @@ def return_all_posted_articles():
 
 @article_page.route('/blog')
 def archive():
+    analytics.increase_view_count(request.path)
     return return_all_posted_articles()
 
 
@@ -52,6 +55,7 @@ def archive():
 def show_article(article_name):
     try:
         post = frontmatter.load('blog/' + article_name + '.md')
+        analytics.increase_view_count(request.path)
         return markdown.markdown(post.content)
     except (FileNotFoundError, TemplateNotFound):
         abort(404)
@@ -64,4 +68,5 @@ def show_author(author_name):
     for article in all_articles:
         if all_articles[article]['author'] == author_name:
             authors_posts[article] = all_articles[article]
+    analytics.increase_view_count(request.path)
     return authors_posts
