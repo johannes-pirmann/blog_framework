@@ -17,3 +17,4 @@
   - summary
   - slug
   - [docs](https://gohugo.io/content-management/front-matter/)
+- Simple analytics
